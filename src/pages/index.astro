@@ -14,6 +14,7 @@ import Sponsors from '@components/landing/sponsors/Sponsors.astro'
 import Communities from '@components/landing/communities/Communities.astro'
 import { Benefits } from '@/components/landing/benefits/Benefits'
 import { HowTo } from '@/components/landing/HowTo/HowTo'
+import OpenSourceEcosystem from '@components/landing/OpenSourceEcosystem.astro'
 
 // Get speakers data
 const speakersCollection = await getCollection('speakers')
@@ -52,6 +53,9 @@ const speakersInfo = await Promise.all<Speaker>(
     >
       <!-- Info -->
       <Info />
+    </section>
+    <section class="w-full snap-start py-8 sm:py-12">
+      <OpenSourceEcosystem />
     </section>
     <section
       id="info"

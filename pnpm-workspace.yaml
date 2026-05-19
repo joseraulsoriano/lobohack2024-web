@@ -1,0 +1,23 @@
+# pnpm 11+: la configuración de parches y builds vive aquí, no en package.json#pnpm.
+# Ver https://pnpm.io/11.x/migration
+packages:
+  - '.'
+
+patchedDependencies:
+  astro-font@0.0.77: patches/astro-font@0.0.77.patch
+  elysia-http-error@1.2.0: patches/elysia-http-error@1.2.0.patch
+  keen-slider@6.8.6: patches/keen-slider@6.8.6.patch
+
+# onlyBuiltDependencies (pnpm <11) -> allowBuilds
+# strictDepBuilds por defecto en pnpm 11: cualquier script de dependencia no listado falla el install (p. ej. es5-ext).
+# En este repo legacy lo relajamos para que Docker/CI no requieran aprobar manualmente toda la gráfica.
+strictDepBuilds: false
+
+allowBuilds:
+  es5-ext: true
+  esbuild: true
+  sharp: true
+  simple-git-hooks: true
+  postinstall-postinstall: true
+  react-vertical-timeline-component: true
+  vue-demi: true

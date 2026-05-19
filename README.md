@@ -1,54 +1,51 @@
-# Astro Starter Kit: Basics
+# LoboHack 2024 — sitio web (Astro)
 
-```sh
-npm create astro@latest -- --template basics
+Landing y registro de la **primera edición** Lobo Hackathon BUAP (2024). Stack: **Astro** + API interna (Elysia) + PostgreSQL (Drizzle).
+
+La plataforma open source actual (registro 2026, app operativa, API compartida) vive en el monorepo **Lobo hack 2** (`api-hack`, `aweb`, `hack-app`). Este repositorio es **histórico / referencia** de la edición 2024.
+
+## Requisitos
+
+- Node.js 22+
+- pnpm 11 (`packageManager` en `package.json`)
+- PostgreSQL (local o Docker)
+
+## Desarrollo local
+
+```bash
+cp .env.example .env
+# Edita SITE_URL y variables de base de datos si aplica
+
+pnpm install
+pnpm dev
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+Sitio: http://localhost:3000
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Docker
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+```bash
+docker compose up --build
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Ver `Dockerfile` y `docker-compose.yml`.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Variables de entorno
 
-Any static assets, like images, can be placed in the `public/` directory.
+| Variable | Descripción |
+|----------|-------------|
+| `SITE_URL` | URL pública del sitio (ej. `http://localhost:3000`) |
 
-## 🧞 Commands
+No subas `.env` con secretos; solo `.env.example` va al repositorio.
 
-All commands are run from the root of the project, from a terminal:
+## Publicar en GitHub
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```bash
+git remote set-url origin https://github.com/joseraulsoriano/lobohack2024-web.git
+git branch -M main
+git push -u origin main
+```
 
-## 👀 Want to learn more?
+## Licencia
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+[MIT](./LICENSE)

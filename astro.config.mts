@@ -61,11 +61,11 @@ export default defineConfig({
   ],
   vite: {
     optimizeDeps: {
-      esbuildOptions: {
-        loader: {
-          '.node': 'file',
-        },
-      },
+      exclude: ['elysia', 'elysia-http-error', '@elysiajs/eden', 'fsevents'],
+    },
+    ssr: {
+      external: ['elysia', '@elysiajs/eden'],
+      noExternal: ['elysia-http-error'],
     },
   },
 })

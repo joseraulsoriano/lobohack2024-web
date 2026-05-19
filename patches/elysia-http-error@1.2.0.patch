@@ -1,0 +1,120 @@
+diff --git a/bun.lockb b/bun.lockb
+deleted file mode 100755
+index 4c5ced43b21486945bfbf7f416b44ca29449b370..0000000000000000000000000000000000000000
+diff --git a/index.js b/index.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..900de229f0f0e4e62b3c26fda9e4b3afe3d96e7d
+--- /dev/null
++++ b/index.js	
+@@ -0,0 +1,84 @@
++import Elysia from "elysia";
++class HttpError extends Error {
++  constructor(message, statusCode, errorData = void 0) {
++    super(message);
++    this.message = message;
++    this.statusCode = statusCode;
++    this.errorData = errorData;
++  }
++  static BadRequest(message, errorData) {
++    return new HttpError(message || "Bad Request", 400, errorData);
++  }
++  static Unauthorized(message, errorData) {
++    return new HttpError(message || "Unauthorized", 401, errorData);
++  }
++  static PaymentRequired(message, errorData) {
++    return new HttpError(message || "Payment Required", 402, errorData);
++  }
++  static Forbidden(message, errorData) {
++    return new HttpError(message || "Forbidden", 403, errorData);
++  }
++  static NotFound(message, errorData) {
++    return new HttpError(message || "Not Found", 404, errorData);
++  }
++  static MethodNotAllowed(message, errorData) {
++    return new HttpError(message || "Method Not Allowed", 405, errorData);
++  }
++  static Conflict(message, errorData) {
++    return new HttpError(message || "Conflict", 409, errorData);
++  }
++  static UnsupportedMediaType(message, errorData) {
++    return new HttpError(message || "UnsupportedMediaType", 415, errorData);
++  }
++  static IAmATeapot(message, errorData) {
++    return new HttpError(message || "IAmATeapot", 418, errorData);
++  }
++  static TooManyRequests(message, errorData) {
++    return new HttpError(message || "Too Many Requests", 429, errorData);
++  }
++  static Internal(message, errorData) {
++    return new HttpError(message || "Internal Server Error", 500, errorData);
++  }
++  static NotImplemented(message, errorData) {
++    return new HttpError(message || "Not Implemented", 501, errorData);
++  }
++  static BadGateway(message, errorData) {
++    return new HttpError(message || "Bad Gateway", 502, errorData);
++  }
++  static ServiceUnavailable(message, errorData) {
++    return new HttpError(message || "Service Unavailable", 503, errorData);
++  }
++  static GatewayTimeout(message, errorData) {
++    return new HttpError(message || "Gateway Timeout", 504, errorData);
++  }
++}
++const httpErrorDecorator = new Elysia({
++  name: "elysia-http-error-decorator"
++}).decorate("HttpError", HttpError);
++const httpError = (params = {
++  customFormatter: void 0,
++  returnStringOnly: false
++}) => new Elysia({ name: "elysia-http-error" }).error({
++  ELYSIA_HTTP_ERROR: HttpError
++}).onError(({ code, error, set }) => {
++  if (code === "ELYSIA_HTTP_ERROR") {
++    set.status = error.statusCode;
++    if (params.customFormatter) {
++      return params.customFormatter(error);
++    }
++    if (params.returnStringOnly) {
++      return error.message;
++    }
++    return {
++      error: true,
++      code: error.statusCode,
++      message: error.message,
++      data: error.errorData
++    };
++  }
++});
++export {
++  HttpError,
++  httpError,
++  httpErrorDecorator
++};
+diff --git a/package.json b/package.json
+index a197f545794ee48a2e90afe35235b7484c7a1b36..6af8ca06341ad3ca2d6f25e2db14b747655adf96 100644
+--- a/package.json
++++ b/package.json	
+@@ -5,7 +5,7 @@
+   "author": {
+     "name": "Yossi Frances"
+   },
+-  "module": "index.ts",
++  "module": "index.js",
+   "type": "module",
+   "devDependencies": {
+     "bun-types": "latest"
+@@ -24,5 +24,12 @@
+     "elysia",
+     "http",
+     "error"
+-  ]
++  ],
++  "main": "index.js",
++  "exports": {
++    ".": {
++      "import": "./index.js",
++      "default": "./index.js"
++    }
++  }
+ }

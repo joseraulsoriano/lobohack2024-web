@@ -2,6 +2,7 @@
   "name": "lobo-site",
   "type": "module",
   "version": "0.0.1",
+  "packageManager": "pnpm@11.1.1",
   "scripts": {
     "dev": "astro dev --port 3000",
     "start": "node dist/server/entry.mjs",
@@ -103,11 +104,5 @@
   },
   "lint-staged": {
     "*.{ts,astro,js,jsx,tsx,vue}": "eslint --fix"
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "keen-slider@6.8.6": "patches/keen-slider@6.8.6.patch",
-      "astro-font@0.0.77": "patches/astro-font@0.0.77.patch"
-    }
   }
 }

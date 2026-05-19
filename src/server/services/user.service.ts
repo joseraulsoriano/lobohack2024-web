@@ -1,5 +1,5 @@
 import type { Session } from '@auth/core/types'
-import { HttpError } from 'elysia-http-error'
+import { HttpError } from '@server/http-error'
 import type { Database } from '../db'
 import type { User } from '../db/schema'
 import Sqids from 'sqids'

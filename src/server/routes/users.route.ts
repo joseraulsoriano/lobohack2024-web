@@ -1,5 +1,5 @@
 import { Elysia, t } from 'elysia'
-import { httpErrorDecorator } from 'elysia-http-error'
+import { httpErrorDecorator } from '@server/http-error'
 import dbDecorator from '../decorators/db.dec'
 import { userSessionSchema } from '../models/session.model'
 

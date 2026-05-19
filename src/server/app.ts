@@ -1,5 +1,5 @@
 import { Elysia } from 'elysia'
-import { httpError } from 'elysia-http-error'
+import { httpError } from '@server/http-error'
 import { teamsRoutes, userRoutes } from './routes'
 
 export const app = new Elysia({ prefix: '/api' })
