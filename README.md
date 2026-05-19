@@ -34,9 +34,19 @@ Ver `Dockerfile` y `docker-compose.yml`.
 
 | Variable | Descripción |
 |----------|-------------|
-| `SITE_URL` | URL pública del sitio (ej. `http://localhost:3000`) |
+| `SITE_URL` | URL pública del sitio (ej. `http://localhost:3000` o `https://tudominio.vercel.app`) |
 
 No subas `.env` con secretos; solo `.env.example` va al repositorio.
+
+### Vercel
+
+En el build **no existe** tu `.env` local. Opciones:
+
+1. **Recomendado:** en Vercel → Project → Settings → Environment Variables, añade  
+   `SITE_URL` = `https://tu-dominio.vercel.app` (Production y Preview).
+2. **Automático:** si no defines `SITE_URL`, el build usa `VERCEL_URL` / `VERCEL_PROJECT_PRODUCTION_URL` que Vercel inyecta.
+
+Sin ninguna de esas, el build falla con `SITE_URL is required`.
 
 ## Publicar en GitHub
 
