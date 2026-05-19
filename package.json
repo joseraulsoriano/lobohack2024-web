@@ -5,9 +5,8 @@
   "packageManager": "pnpm@11.1.1",
   "scripts": {
     "dev": "astro dev --port 3000",
-    "start": "node dist/server/entry.mjs",
-    "start:migrate": "npm run migrate-prod || true && npm run start",
-    "build": "astro build && nr compile-migrate",
+    "start": "astro preview --port 3000",
+    "build": "astro build",
     "build:check": "astro check && nr build",
     "preview": "astro preview",
     "format": "prettier --write ./src/**/*.{astro,ts,js,jsx,tsx,vue}",

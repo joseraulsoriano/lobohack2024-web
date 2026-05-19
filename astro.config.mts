@@ -1,11 +1,9 @@
-import node from '@astrojs/node'
 import React from '@astrojs/react'
 import Sitemap from '@astrojs/sitemap'
 import Vue from '@astrojs/vue'
 import AstroFontPicker from 'astro-font-picker'
 import Icon from 'astro-icon'
 import { defineConfig } from 'astro/config'
-import AuthAstro from 'auth-astro'
 import UnoCSS from 'unocss/astro'
 import { loadEnv } from 'vite'
 
@@ -16,7 +14,6 @@ const { PORT: LOADED_PORT, HOST: LOADED_HOST } = loadEnv(
   ''
 )
 
-/** Normaliza host a URL absoluta con protocolo (Astro `site`). */
 function toAbsoluteSiteUrl(raw: string | undefined): string | undefined {
   const v = raw?.trim()
   if (!v) return undefined
@@ -24,10 +21,6 @@ function toAbsoluteSiteUrl(raw: string | undefined): string | undefined {
   return `https://${v.replace(/\/$/, '')}`
 }
 
-/**
- * Orden: SITE_URL explícita → dominio de producción Vercel → preview VERCEL_URL → .env local.
- * En Vercel no hay `.env` en el build; define SITE_URL en el dashboard o usa VERCEL_*.
- */
 function resolveSiteUrl(): string | undefined {
   const fromEnv = loadEnv(process.env.NODE_ENV || 'development', process.cwd(), '').SITE_URL
   const explicit = toAbsoluteSiteUrl(
@@ -56,12 +49,9 @@ if (process.env.NODE_ENV === 'production' && !SITE_URL) {
 
 console.log('\x1b[34m%s\x1b[0m', `Astro's SITE_URL: ${SITE_URL}`)
 
-// https://astro.build/config
+// Sitio estático (solo landing 2024). Backend/equipos/auth archivados en _archive/server-pages.
 export default defineConfig({
-  output: 'server',
-  adapter: node({
-    mode: 'standalone',
-  }),
+  output: 'static',
   server: {
     port: parseInt(PORT),
     host: HOST,
@@ -71,31 +61,15 @@ export default defineConfig({
     UnoCSS({
       injectReset: true,
     }),
-    // Font Picker for Astro's dev toolbar
     AstroFontPicker(),
     Sitemap(),
-    // https://github.com/natemoo-re/astro-icon
     Icon(),
-
-    // React integration
     React(),
-
-    // Vue integration
     Vue({
       script: {
         defineModel: true,
         propsDestructure: true,
       },
     }),
-    AuthAstro(),
   ],
-  vite: {
-    optimizeDeps: {
-      exclude: ['elysia', 'elysia-http-error', '@elysiajs/eden', 'fsevents'],
-    },
-    ssr: {
-      external: ['elysia', '@elysiajs/eden'],
-      noExternal: ['elysia-http-error'],
-    },
-  },
 })

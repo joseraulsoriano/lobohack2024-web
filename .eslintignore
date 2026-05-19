@@ -9,3 +9,9 @@ package.json
 
 # Patches folder
 patches/
+
+# Archivo histórico con backend (no se despliega)
+_archive/
+
+# JSX legacy sin parser react en hook
+src/components/landing/HowTo/HowTo.jsx

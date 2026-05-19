@@ -9,7 +9,8 @@ interface ImportMetaEnv {
   readonly PUBLIC_PREREGISTER_API_ENDPOINT: string
   readonly PUBLIC_API_ENDPOINT: string
 
-  // Registration
+  // Registration (opcional en sitio estático)
+  readonly PUBLIC_REGISTRATION_URL: string
   readonly PUBLIC_REGISTRATION_FORMS_URL: string
 
   // Sqids

@@ -1,40 +1,23 @@
 ---
 import NavMobileMenu from './NavMobileMenu.vue'
-import { getSession } from 'auth-astro/server'
-import NavbarAvatar from '@components/user/NavbarAvatar.astro'
 
 export const navbarItems = [
-  {
-    title: 'Invitados',
-    href: '/#invitados',
-  },
-  {
-    title: 'Nuestros aliados',
-    href: '/#aliados',
-  },
-  {
-    title: 'Agenda',
-    href: '/#agenda',
-  },
-  {
-    title: 'Patrocinadores',
-    href: '/#patrocinadores',
-  },
+  { title: 'Invitados', href: '/#invitados' },
+  { title: 'Nuestros aliados', href: '/#aliados' },
+  { title: 'Agenda', href: '/#agenda' },
+  { title: 'Patrocinadores', href: '/#patrocinadores' },
 ]
 
-const session = await getSession(Astro.request)
-
-const isAuthenticated = session !== null
+/** Enlace opcional a registro de ediciones nuevas (aweb). Definir en Vercel: PUBLIC_REGISTRATION_URL */
+const registrationUrl = import.meta.env.PUBLIC_REGISTRATION_URL?.trim() || ''
 ---
 
 <Fragment>
   <nav class="relative z-2 bg-none p-4">
-    <!-- Desktop navbar -->
-    <div class="hidden h-10 w-full px-2" lg="flex flex-1 items-center justify-between">
+    <div class="hidden h-10 w-full flex-1 items-center justify-between px-2 lg:flex">
       <a href="/" class="mr-auto">
         <div class="i-solar:home-2-broken hw-6"></div>
       </a>
-      <!-- Navigation items -->
       <ul class="flex items-center space-x-4">
         {
           navbarItems.map((item) => (
@@ -52,14 +35,13 @@ const isAuthenticated = session !== null
             </li>
           ))
         }
-        <!-- Register button -->
-        <li>
-          {
-            isAuthenticated ? (
-              <NavbarAvatar session={session} />
-            ) : (
+        {
+          registrationUrl ? (
+            <li>
               <a
-                href="/acceder"
+                href={registrationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 class:list={[
                   'relative',
                   'inline-block',
@@ -67,7 +49,6 @@ const isAuthenticated = session !== null
                   'tracking-[0.3em]',
                   'text-sm',
                   'font-bold',
-                  'mx-auto',
                   'uppercase',
                   'px-6',
                   'py-2',
@@ -76,45 +57,16 @@ const isAuthenticated = session !== null
                   'border-primary',
                   'text-primary',
                 ]}
-                hover="btn-glitch1 before:text-secondary text-base before:-scale-y-100"
-                focus="btn-glitch1 text-base before:-scale-y-100"
-                data-glitch-text="Acceder"
               >
-                Acceder
+                Registro 2026
               </a>
-            )
-          }
-        </li>
-        <!-- <a
-                href="/registro"
-                class:list={[
-                  'relative',
-                  'inline-block',
-                  'text-center',
-                  'tracking-[0.3em]',
-                  'text-sm',
-                  'font-bold',
-                  'mx-auto',
-                  'uppercase',
-                  'px-6',
-                  'py-2',
-                  'border-2',
-                  'border-solid',
-                  'border-white',
-                  'text-white',
-                  'rounded-full',
-                  'hover:(btn-glitch2 before:-scale-y-100 before:animation-duration-2s text-black)',
-                  'focus:(btn-glitch2)',
-                ]}
-                data-glitch-text="Registro"
-              >
-                Registro
-              </a> -->
+            </li>
+          ) : null
+        }
       </ul>
-      <!-- </div> -->
     </div>
-    <!-- Mobile navbar -->
-    <div class="h-10 w-full flex items-center justify-between" lg="hidden">
+
+    <div class="h-10 w-full flex items-center justify-between lg:hidden">
       <a href="/">
         <div class="i-solar:home-2-broken hw-6"></div>
       </a>
@@ -135,36 +87,19 @@ const isAuthenticated = session !== null
               </li>
             ))
           }
-          <!-- Register button -->
           {
-            isAuthenticated ? (
+            registrationUrl ? (
               <li class="w-full flex justify-center py-2">
-                <NavbarAvatar session={session} />
-              </li>
-            ) : (
-              <li w-full>
                 <a
-                  href="/acceder"
-                  class:list={[
-                    'relative',
-                    'text-center',
-                    'tracking-3',
-                    'text-4',
-                    'font-bold',
-                    'uppercase',
-                    'py-6',
-                    'text-primary',
-                    'flex',
-                    'justify-center',
-                  ]}
-                  hover="btn-glitch1 before:text-secondary text-base before:-scale-y-100"
-                  focus="btn-glitch1 text-base before:-scale-y-100"
-                  data-glitch-text="Acceder"
+                  href={registrationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="py-4 text-sm text-primary font-bold uppercase"
                 >
-                  Acceder
+                  Registro 2026
                 </a>
               </li>
-            )
+            ) : null
           }
         </ul>
       </NavMobileMenu>

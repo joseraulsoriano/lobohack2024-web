@@ -17,7 +17,8 @@ export const HowTo = () => {
             <div>
               <h3 className="section__how-text--tile font-title">1 - Registrate en el hackathon</h3>
               <p className="section__how-how-text--description">
-                Registrate en el hackathon en el siguiente registro
+                En 2024 el registro era en esta plataforma. Las ediciones actuales usan la web open source del
+                monorepo (aweb).
               </p>
             </div>
           </div>

@@ -1,60 +1,49 @@
-# LoboHack 2024 — sitio web (Astro)
+# LoboHack 2024 — sitio web (solo front)
 
-Landing y registro de la **primera edición** Lobo Hackathon BUAP (2024). Stack: **Astro** + API interna (Elysia) + PostgreSQL (Drizzle).
+Landing de la **primera edición** Lobo Hackathon BUAP (2024). **Astro estático** — sin API ni base de datos en este despliegue.
 
-La plataforma open source actual (registro 2026, app operativa, API compartida) vive en el monorepo **Lobo hack 2** (`api-hack`, `aweb`, `hack-app`). Este repositorio es **histórico / referencia** de la edición 2024.
+| Despliegue | Qué incluye |
+|------------|-------------|
+| **Este repo (Vercel)** | Página informativa: speakers, agenda, patrocinadores, FAQs |
+| **Monorepo 2026** (`aweb`, `api-hack`, `hack-app`) | Registro, admin y operación en sede |
 
 ## Requisitos
 
 - Node.js 22+
-- pnpm 11 (`packageManager` en `package.json`)
-- PostgreSQL (local o Docker)
+- pnpm 11
 
 ## Desarrollo local
 
 ```bash
 cp .env.example .env
-# Edita SITE_URL y variables de base de datos si aplica
-
 pnpm install
 pnpm dev
 ```
 
-Sitio: http://localhost:3000
+http://localhost:3000
 
-## Docker
-
-```bash
-docker compose up --build
-```
-
-Ver `Dockerfile` y `docker-compose.yml`.
-
-## Variables de entorno
-
-| Variable | Descripción |
-|----------|-------------|
-| `SITE_URL` | URL pública del sitio (ej. `http://localhost:3000` o `https://tudominio.vercel.app`) |
-
-No subas `.env` con secretos; solo `.env.example` va al repositorio.
-
-### Vercel
-
-En el build **no existe** tu `.env` local. Opciones:
-
-1. **Recomendado:** en Vercel → Project → Settings → Environment Variables, añade  
-   `SITE_URL` = `https://tu-dominio.vercel.app` (Production y Preview).
-2. **Automático:** si no defines `SITE_URL`, el build usa `VERCEL_URL` / `VERCEL_PROJECT_PRODUCTION_URL` que Vercel inyecta.
-
-Sin ninguna de esas, el build falla con `SITE_URL is required`.
-
-## Publicar en GitHub
+## Build estático
 
 ```bash
-git remote set-url origin https://github.com/joseraulsoriano/lobohack2024-web.git
-git branch -M main
-git push -u origin main
+pnpm run build
+pnpm run preview
 ```
+
+Salida: carpeta `dist/` (HTML/CSS/JS).
+
+## Vercel
+
+1. Conecta el repo `lobohack2024-web`.
+2. Framework: **Astro** (o usa `vercel.json` incluido).
+3. Variables opcionales:
+   - `SITE_URL` — `https://tu-dominio.vercel.app` (si no, se usa `VERCEL_URL`).
+   - `PUBLIC_REGISTRATION_URL` — enlace externo al registro actual (ej. tu `aweb` en producción).
+
+No configures base de datos ni secrets de OAuth en Vercel para este proyecto.
+
+## Backend archivado
+
+El código SSR/API de la edición 2024 está en [`_archive/server-pages/`](./_archive/server-pages/) por si quieres consultarlo localmente con Docker; **no** forma parte del deploy en Vercel.
 
 ## Licencia
 
